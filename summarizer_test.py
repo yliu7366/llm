@@ -12,28 +12,29 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 if REBUILD:
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
     all_splits = text_splitter.split_documents(books)
-    #for i in range(100):
-    #    print(all_splits[i])
+    all_splits = all_splits[19:23]
+    #for chunk in all_splits:
+    #    print(chunk)
 
 from langchain_chroma import Chroma
-from langchain_community.embeddings import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
 
 if REBUILD:
     vectorstore = Chroma.from_documents(
         documents=all_splits,
-        embedding=OllamaEmbeddings(model="llama3", show_progress=True),
+        embedding=OllamaEmbeddings(model="llama3"),
         persist_directory="./chroma_db",
     )
 else:
     vectorstore = Chroma(persist_directory='./chroma_db',
-                  embedding_function=OllamaEmbeddings(model="llama3", show_progress=True))
+                  embedding_function=OllamaEmbeddings(model="llama3"))
 
 from langchain import hub
-from langchain_community.llms import Ollama
+from langchain_ollama.llms import OllamaLLM
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-llm = Ollama(model="llama3")
+llm = OllamaLLM(model="llama3")
 
 retriever = vectorstore.as_retriever()
 
@@ -49,12 +50,16 @@ qa_chain = (
 )
 
 question = "What is the royalty income in FY2023"
-question = "What is the office of Technology transfer"
-question = "In FY2023, how many licensed products provided royalty income back to the NIH"
-question = "Where is royalty income mentioned?"
+#question = "What is the office of Technology transfer"
+#question = "In FY2023, how many licensed products provided royalty income back to the NIH"
+#question = "Where was royalty income mentioned in the document"
 #question = "Where is OTT mentioned in the document?"
+#question = "What did NCATS do? Show me the numbers of inventions and patents"
+#question = "In the first paragraph, the document mentioned about royal income. How much was the dollar amount of the royal income?"
+
+#question = "how many licensed products developed from NIH, what are their names"
+print(question)
 answers = qa_chain.invoke(question)
 
-print(vectorstore.similarity_search("royalty income"))
 
 print(answers)
