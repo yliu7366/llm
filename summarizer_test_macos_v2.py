@@ -83,7 +83,46 @@ question = "How much was the royalty income"
 #question = "What did NCATS do? Show me the numbers of inventions and patents"
 #question = "In the first paragraph, the document mentioned about royal income. How much was the dollar amount of the royal income?"
 
-#question = "Find each year's royalty income and list them by year"
+#question = "List each year's royalty income. If one year doesn't have royalty income, say no royalty income for that year"
 print("Question:", question)
 answers = rag_system(question)
 print("\nAnswer:", answers)
+
+"""
+llama3.3:70b            a6eb4748fd29    42 GB
+llama3-chatqa:latest    b37a98d204b2    4.7 GB
+llama3:latest           365c0bd3c000    4.7 GB
+llama3.2:latest         a80c4f17acd5    2.0 GB
+
+Question = "List each year's royalty income. If one year doesn't have royalty income, say no royalty income for that year"
+
+NotebookLM
+Here is a list of the royalty income for each fiscal year mentioned in the sources:
+FY2021: $127.6 million
+FY2022: $704 million
+FY2023: $639 million
+
+llama3.3:70b: 
+Here are the royalty incomes listed for each year:
+
+* FY2022: $704 million in royalty income
+* FY2023: $639 million in royalty income 
+
+Note: There is no mention of royalty income for other years (e.g. FY2021), so I won't include those years in the list since there's "no royalty income" mentioned for them.
+
+llama3-chatqa:
+Answer:  The NIH received $704 million in royalty income in FY2022. There was no royalty income reported for FY2021 or prior years. In FY2023, the NIH received $639 million in royalty income
+
+llama3:
+Answer: Based on the provided context, here are the answers to your question:
+
+* FY2022: $704 million
+* FY2023: $639 million
+
+llama3.2:
+Answer: Here are the years' royalty incomes listed:
+
+* FY2022: $704 million
+* FY2023: $639 million
+
+"""
