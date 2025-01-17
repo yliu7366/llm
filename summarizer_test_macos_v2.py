@@ -86,7 +86,7 @@ question = "How much was the royalty income"
 #question = "List each year's royalty income. If one year doesn't have royalty income, say no royalty income for that year"
 print("Question:", question)
 answers = rag_system(question)
-print("\nAnswer:", answers)
+print(MODEL+":\nAnswer:", answers)
 
 """
 llama3.3:70b            a6eb4748fd29    42 GB
