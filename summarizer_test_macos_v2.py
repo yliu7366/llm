@@ -61,7 +61,7 @@ llm = OllamaLLM(model=MODEL)
 
 def generate_response(query, retrieved_docs):
   context = " ".join(doc.page_content for doc in retrieved_docs)
-  prompt = f"Based on the following information: {context}\n\nAnswer the query: {query}"
+  prompt = f"You are an assistant for question-answering tasks. Based on the following pieces of retrieved context to answer the question.\nContext: {context}\nQuestion: {query}\nAnswer:"
   response = llm.invoke(prompt)
   return response
 
